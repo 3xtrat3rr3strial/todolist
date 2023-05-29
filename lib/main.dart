@@ -57,6 +57,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _removeCheckedTodos() {
+    setState(() {
+      for (var todo in widget.todos) {
+        if (todo.checked) {
+          setState(() {
+            widget.todos.remove(todo);
+          });
+        }
+      }
+      //setState(() {});
+    });
+  }
+
   void _toggleTodoAtIndex(int index) {
     setState(() {
       widget.todos[index].checked = !widget.todos[index].checked;
@@ -113,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: TextField(
                   controller: _textEditingController,
                   decoration: const InputDecoration(
-                    hintText: 'Enter a todo',
+                    hintText: 'Enter a task',
                     contentPadding: EdgeInsets.all(8.0),
                   ),
                   onSubmitted: (_) {
@@ -133,6 +146,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
                 child: const Text('Check All'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  _removeCheckedTodos();
+                  setState(() {});
+                },
+                child: const Text('Delete checked tasks'),
               ),
               ElevatedButton(
                 onPressed: () {
